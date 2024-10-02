@@ -7,37 +7,49 @@ import AddRecord from '../Functionalities/AddRecord';
 const Dashboard = () => {
     const [records, setRecords] = useState([]);
     const [selectedRecords, setSelectedRecords] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchRecords = async () => {
-            const response = await fetch('https://66b6fcb27f7b1c6d8f1a98c0.mockapi.io/api/a1/client'); // Replace with your API endpoint
-            const data = await response.json();
-            setRecords(data);
+            setLoading(true);
+            try {
+                const response = await fetch('https://66b6fcb27f7b1c6d8f1a98c0.mockapi.io/api/a1/client');
+                if (!response.ok) throw new Error('Failed to fetch data');
+                const data = await response.json();
+                setRecords(data);
+            } catch (error) {
+                console.error('Error fetching records:', error);
+            } finally {
+                setLoading(false);
+            }
         };
+
         fetchRecords();
     }, []);
 
-    // Function to add a new record
-    const handleAddRecord = (newRecord) => {
-        setRecords((prevRecords) => [...prevRecords, newRecord]); // Directly add the new record
-    };
-
-    // Function to handle selected records
     const handleSelectRecords = (selected) => {
-        setSelectedRecords(selected); // Update the selected records
+        setSelectedRecords(selected); // Update the selected records state
     };
 
     return (
         <div>
             <Header />
             <div className="p-6">
-                <ButtonGroupCRUD />
-                {/* <AddRecord onAddRecord={handleAddRecord} />  */}
+            <ButtonGroupCRUD />
+                {loading ? (
+                    <div>Loading...</div>
+                ) : (
+                    records.length === 0 ? (
+                        <div>No records available</div>
+                    ) : (
+                        <RecordsTable
+                            records={records}
+                            onSelectRecords={handleSelectRecords}
+                        />
+                    )
+                )}
 
-                <RecordsTable 
-                    records={records} 
-                    onSelectRecords={handleSelectRecords} 
-                />
+
             </div>
         </div>
     );
