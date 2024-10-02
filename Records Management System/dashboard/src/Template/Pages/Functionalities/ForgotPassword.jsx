@@ -48,7 +48,7 @@ const ForgotPassword = () => {
 								<button to="/otp"
 									type="submit"
 									className="w-3/4  bg-green-700 hover:bg-green-950 text-white font-bold py-3 rounded-lg transition duration-200">
-									Send OTP
+									Send-OTP
 								</button>
 							</div>
 						</div>
