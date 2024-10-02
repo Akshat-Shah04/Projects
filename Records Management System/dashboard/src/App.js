@@ -6,6 +6,7 @@ import Login from './Template/Pages/Layout/Login';
 import SignUp from './Template/Pages/Layout/SignUp';
 import Page404 from './Template/Pages/Functionalities/Page404';
 import ForgotPassword from './Template/Pages/Functionalities/ForgotPassword';
+import Otp from './Template/Pages/Functionalities/Otp';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path='/addRecord' element={<AddRecord />} />
         <Route path='/*' element={<Page404 />} />
         <Route path='/forgotpwd' element={<ForgotPassword />} />
+        <Route path='/otp' element={<Otp />} />
       </Routes>
     </BrowserRouter>
   );
